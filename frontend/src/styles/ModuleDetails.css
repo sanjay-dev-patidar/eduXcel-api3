@@ -1,0 +1,240 @@
+/* global.CSS */
+/* ... (existing styles) */
+
+/* Container for ModuleDetails */
+.module-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #666;
+}
+
+/* Style for the loader */
+.module-container .loading {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Style for the error message */
+.module-container .error {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+  color: #ff0000; /* Customize error message color */
+}
+
+/* Style for the "not found" message */
+.module-container .not-found {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+  color: #8b8d5d; /* Customize not found message color */
+}
+
+/* Style for the module details */
+.module-container .module-details {
+  background-color: #bfc298;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the module content */
+.module-container .module-details .module-content {
+  margin-top: 20px;
+}
+
+/* Style for the module items */
+.module-container .module-details .module-item {
+  margin-bottom: 20px;
+}
+
+/* Style for the module item titles */
+.module-container .module-details .module-item h3 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Style for the module item descriptions */
+.module-container .module-details .module-item p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Style for the video container within module items */
+.module-container .module-details .module-item .video-container {
+  position: relative;
+  max-width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio for responsive video */
+  overflow: hidden;
+  min-height: 300px; /* Set a minimum height to ensure visibility */
+}
+
+/* Style for the video player within module items */
+.module-container .module-details .module-item .video-container .video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex; /* Use flex to center the video vertically and horizontally */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the video player within module items */
+.module-container .module-details .module-item .video-container .video-wrapper .react-player {
+  max-width: 100%; /* Ensure the video player scales with its container */
+  max-height: 100%; /* Ensure the video player scales with its container */
+}
+
+/* Style for the module item images */
+.module-container .module-details .module-item .module-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Add an underline effect to module links on hover */
+/* Add an underline effect to module links on hover */
+
+.module-container .module-details .module-item h3 a {
+  color: #120101; /* Link text color */
+  text-decoration: none; /* Remove underlines */
+  font-weight: bold; /* Make the text bold */
+  position: relative; /* Enable relative positioning for pseudo-elements */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+/* Underline effect for module item links */
+.module-container .module-details .module-item h3 a::before {
+  content: ''; /* Create an empty pseudo-element */
+  position: absolute; /* Position it absolutely */
+  width: 100%; /* Full width */
+  height: 2px; /* Thickness of the underline */
+  bottom: 0; /* Position it at the bottom */
+  left: 0; /* Align it to the left */
+  background-color: #49be37; /* Underline color */
+  transform: scaleX(0); /* Initially hidden */
+  transform-origin: right; /* Start the animation from the right */
+  transition: transform 0.3s ease; /* Smooth underline animation */
+}
+
+/* Hover effect for the underline */
+.module-container .module-details .module-item h3 a:hover::before {
+  transform: scaleX(1); /* Show the underline on hover */
+  transform-origin: left; /* Animate from left to right */
+}
+
+/* Change color on hover with a smoother transition */
+.module-container .module-details .module-item h3 a:hover {
+  color: #33420f; /* Hovered link text color */
+}
+
+.video-container {
+  position: relative;
+  max-width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio for responsive video */
+  overflow: hidden;
+  min-height: 300px; /* Set a minimum height to ensure visibility */
+}
+
+/* Style for the video wrapper */
+.video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex; /* Use flex to center the video vertically and horizontally */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the video player */
+.react-player {
+  max-width: 100%; /* Ensure the video player scales with its container */
+  max-height: 100%; /* Ensure the video player scales with its container */
+}
+
+/* Custom aspect ratio for a 300x700 video container */
+@media screen and (max-width: 768px) {
+  .video-container.custom-aspect-ratio {
+    padding-top: 233.33%; /* 700 / 300 * 100% */               
+  }
+}
+/* CSS for the description text */
+/* Style for the module item descriptions */
+.module-container .module-details .module-item .module-description {
+  color: #000000; /* Text color */
+  font-size: 16px; /* Font size */
+  margin-bottom: 10px; /* Margin at the bottom */
+}
+
+
+/* Additional styles based on previous responses */
+
+/* Style for HTML Basics elements list */
+.module-container .module-details .module-item .html-basics-elements ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for CSS Styling options list */
+.module-container .module-details .module-item .css-styling-options ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for JavaScript Features list */
+.module-container .module-details .module-item .javascript-features ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Responsive Techniques list */
+.module-container .module-details .module-item .responsive-techniques ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Frontend Frameworks list */
+.module-container .module-details .module-item .frontend-frameworks ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Machine Learning Topics list */
+.module-container .module-details .module-item .machine-learning-topics ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Machine Learning Types list */
+.module-container .module-details .module-item .machine-learning-types ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Machine Learning Algorithms list */
+.module-container .module-details .module-item .machine-learning-algorithms ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Style for Feature Engineering list */
+.module-container .module-details .module-item .feature-engineering ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}

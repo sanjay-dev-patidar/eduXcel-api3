@@ -1,0 +1,59 @@
+.shining-border {
+  animation: shining 2s infinite;
+}
+
+@keyframes shining {
+  0% {
+    box-shadow: 0 0 10px 0px #ffeb3b;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 15px 10px #ffeb3b;
+    transform: scale(1.1);
+  }
+  100% {
+    box-shadow: 0 0 10px 0px #ffeb3b;
+    transform: scale(1);
+  }
+}
+
+
+
+
+.about-section {
+    padding: 50px;
+    /* Add any other styles for your section */
+  }
+  
+ 
+  
+  .image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    /* Add any other image styles */
+  }
+  
+  .list {
+    list-style: none;
+    max-width: 300px;
+    /* Add any other list styles */
+  }
+  
+  .list-item {
+    margin-bottom: 10px;
+    /* Add other list item styles as needed */
+  }
+  .creativity {
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .creativity {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+  

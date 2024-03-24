@@ -1,0 +1,126 @@
+/* CourseList.css */
+.course-list {
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.course-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.course-card {
+  width: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.course-image {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.course-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(10, 35, 67, 0.6), rgba(34, 45, 99, 0.6));
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.course-card:hover .course-image::before {
+  opacity: 1;
+}
+
+.course-info {
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  color: #333; /* Changed text color to a darker shade for better visibility */
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(62, 9, 219, 0.5);
+}
+
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666; /* Slightly lighter gray description text */
+}
+
+a {
+  color: #007bff; /* Changed link color to a darker shade of blue */
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-weight: bold;
+}
+
+.course-card:hover a {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+.close-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+.close-button:hover {
+  background-color: #ff0000;
+}
+
+.sign-in-sign-up-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+  position: relative;
+}
