@@ -70,6 +70,7 @@ const Tools = mongoose.model('tools', {
   imageURL: [String],
   videoURL: [String],
 });
+
 const Working = mongoose.model('working', {
   title: String,
   overview: [String],
@@ -78,6 +79,93 @@ const Working = mongoose.model('working', {
   imageURL: [String],
   videoURL: [String],
 });
+
+const Career = mongoose.model('careers', {
+  title: String,
+  overview: [String],
+  description: [String],
+  keypoints: [String],
+  imageURL: [String],
+  videoURL: [String],
+});
+const FrontendDevelopmentCareerSchema = new mongoose.Schema({
+  title: String,
+  overview: [String],
+  description: [String],
+  keypoints: [String],
+  imageURL: [String],
+  videoURL: [String],
+});
+
+// Define schema for CSS courses
+const BackendDevelopmentCareerSchema = new mongoose.Schema({
+  title: String,
+  overview: [String],
+  description: [String],
+  keypoints: [String],
+  imageURL: [String],
+  videoURL: [String],
+});
+
+const FrontendDevelopmentCareers = mongoose.model('frontend_development_careers', FrontendDevelopmentCareerSchema);
+
+const BackendDevelopmentCareers = mongoose.model('backend_development_careers', BackendDevelopmentCareerSchema);
+
+// Export the models
+module.exports = {
+  FrontendDevelopmentCareers,
+  BackendDevelopmentCareers,
+  
+};
+
+
+const College = mongoose.model('colleges', {
+  title: String,
+  overview: [String],
+  description: [String],
+  keypoints: [String],
+  imageURL: [String],
+  videoURL: [String],
+});
+
+const Choice = mongoose.model('choice', {
+  title: String,
+  overview: [String],
+  description: [String],
+  keypoints: [String],
+  imageURL: [String],
+  videoURL: [String],
+});
+
+
+const ChandigarhUniversitySchema = new mongoose.Schema({
+title: String,
+overview: [String],
+description: [String],
+keypoints: [String],
+imageURL: [String],
+videoURL: [String],
+});
+
+// Define schema for CSS courses
+const ChitkaraUniversitySchema = new mongoose.Schema({
+title: String,
+overview: [String],
+description: [String],
+keypoints: [String],
+imageURL: [String],
+videoURL: [String],
+});
+
+const ChandigarhUniversity = mongoose.model('chandigarh-university-articles', ChandigarhUniversitySchema);
+
+const ChitkaraUniversity = mongoose.model('chitkara-university-articles', ChitkaraUniversitySchema);
+// Export the models
+module.exports = {
+  ChandigarhUniversity,
+  ChitkaraUniversity,
+  
+};
 // Define schema for HTML courses
 const HTMLCourseSchema = new mongoose.Schema({
   title: String,
@@ -219,6 +307,76 @@ app.use('/api/profile', profileRouter);
 app.use('/api/courses', coursesRouter);
 app.use('/api/forgotpassword', forgotPasswordRouter);
 app.use('/api/reset-password', resetPasswordRouter);
+// Add a new API endpoint to fetch random blog titles
+app.get('/api/random-blog-titles', async (req, res) => {
+  try {
+    // Fetch a random selection of 5 blog titles from the database
+    const randomToolsBlogs = await Tools.aggregate([{ $sample: { size: 4 } }]);
+    const randomWorkingBlogs = await Working.aggregate([{ $sample: { size: 1 } }]);
+
+    // Combine and shuffle the titles
+    const randomBlogTitles = [
+      ...randomToolsBlogs.map(blog => blog.title),
+      ...randomWorkingBlogs.map(blog => blog.title),
+    ].sort(() => Math.random() - 0.5).slice(0, 5);
+
+    res.json(randomBlogTitles);
+  } catch (error) {
+    console.error('Error fetching random blog titles:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+ //new api for talks
+ app.get('/api/:vision', async (req, res) => {
+  const { vision } = req.params;
+  try {
+    let talkContent;
+    // Fetch course content based on the provided vision
+    switch (vision) {
+      case 'frontend_development_careers':
+        talkContent = await FrontendDevelopmentCareers.find().lean();
+        break;
+      case 'backend_development_careers':
+        talkContent = await BackendDevelopmentCareers.find().lean();
+        break;
+      default:
+        // Check if the vision matches any library in the database
+        const library = await mydb.collection(vision).find().toArray();
+        if (library.length > 0) {
+          talkContent = library;
+        } else {
+          return res.status(404).json({ error: 'Vision not found' });
+        }
+    }
+
+    if (talkContent.length > 0) {
+      return res.json(talkContent);
+    } else {
+      return res.status(404).json({ error: 'Talk not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching course content:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/careers/vision/:vision', async (req, res) => {
+  try {
+    const vision = req.params.vision;
+    if (vision === 'all') {
+      const career = await Career.find();
+      res.json(career);
+    } else {
+      const career = await Career.find({ vision });
+      res.json(career);
+    }
+  } catch (error) {
+    console.error('Error fetching career:', error);
+    res.status(500).json({ error: 'Error fetching career' });
+  }
+});
+
 
 
 app.put('/api/profile', authMiddleware, async (req, res) => {
@@ -258,27 +416,127 @@ app.get('/uploads/:filename', (req, res) => {
   res.setHeader('Cache-Control', 'no-store'); // Disable caching
   res.sendFile(path.join(__dirname, 'uploads', req.params.filename));
 });
-
-
-// Add a new API endpoint to fetch random blog titles
-app.get('/api/random-blog-titles', async (req, res) => {
+ //new api for talks
+ app.get('/api/:institute', async (req, res) => {
+  const { institute } = req.params;
   try {
-    // Fetch a random selection of 5 blog titles from the database
-    const randomToolsBlogs = await Tools.aggregate([{ $sample: { size: 4 } }]);
-    const randomWorkingBlogs = await Working.aggregate([{ $sample: { size: 1 } }]);
+    let talkContent;
+    // Fetch course content based on the provided vision
+    switch (institute) {
+      case 'chandigarh-university-articles':
+        talkContent = await ChandigarhUniversity.find().lean();
+        break;
+      case 'chitkara-university-articles':
+        talkContent = await ChitkaraUniversity.find().lean();
+        break;
+      default:
+        // Check if the vision matches any library in the database
+        const library = await mydb.collection(institute).find().toArray();
+        if (library.length > 0) {
+          talkContent = library;
+        } else {
+          return res.status(404).json({ error: 'Institute not found' });
+        }
+    }
 
-    // Combine and shuffle the titles
-    const randomBlogTitles = [
-      ...randomToolsBlogs.map(blog => blog.title),
-      ...randomWorkingBlogs.map(blog => blog.title),
-    ].sort(() => Math.random() - 0.5).slice(0, 5);
-
-    res.json(randomBlogTitles);
+    if (talkContent.length > 0) {
+      return res.json(talkContent);
+    } else {
+      return res.status(404).json({ error: 'Institute not found' });
+    }
   } catch (error) {
-    console.error('Error fetching random blog titles:', error);
+    console.error('Error fetching Institute content:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.get('/api/institute/:institute', async (req, res) => {
+  try {
+    const institute = req.params.institute;
+    if (institute === 'all') {
+      const college = await College.find();
+      res.json(college);
+    } else {
+      const college = await College.find({ institute });
+      res.json(college);
+    }
+  } catch (error) {
+    console.error('Error fetching college:', error);
+    res.status(500).json({ error: 'Error fetching college' });
+  }
+});
+
+
+
+ app.get('/api/:collection', async (req, res) => {
+    const collection = req.params.collection;
+    try {
+      let data;
+      switch (collection) {
+       
+        case 'tools':
+          data = await Tools.find().lean();
+          break;
+        case 'working':
+          data = await Working.find().lean();
+          break;
+  
+           case 'careers':
+          data = await Careers.find().lean();
+          break;
+        case 'choice':
+          data = await Choice.find().lean();
+          break;
+       
+        default:
+          return res.status(404).json({ error: 'Collection not found' });
+      }
+      console.log('Data fetched successfully from', collection, 'collection:', data);
+      res.json(data);
+    } catch (error) {
+      console.error(`Error fetching data from ${collection} collection:`, error);
+      res.status(500).json({ error: `Error fetching data from ${collection} collection` });
+    }
+  });
+  app.get('/api/blogs/:collection/:title', async (req, res) => {
+    try {
+      const { collection, title } = req.params;
+      const decodedTitle = decodeURIComponent(title);
+
+      // Ensure the function is declared as async
+      const fetchContent = async () => {
+        try {
+          let content;
+          // Fetch content based on the provided title and collection
+          if (collection === 'careers') {
+            content = await Careers.findOne({ title: decodedTitle });
+          } else if (collection === 'tools') {
+            content = await Tools.findOne({ title: decodedTitle });
+          } else {
+            content = await Working.findOne({ title: decodedTitle });
+          }
+
+          if (content) {
+            const selectedContent = content.content.find(item => item.title === decodedTitle);
+            return res.json(selectedContent);
+          } else {
+            return res.status(404).json({ error: 'Content not found' });
+          }
+        } catch (error) {
+          console.error('Error fetching content:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      };
+
+      // Call the asynchronous function
+      await fetchContent();
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+
 
 
 
@@ -434,37 +692,7 @@ app.get('/api/protected', passport.authenticate('local'), (req, res) => {
   res.json({ message: 'This route is protected' });
 });
 
-app.get('/api/courses/:title/:module', async (req, res) => {
-  try {
-    const courseTitle = req.params.title;
-    const moduleTitle = req.params.module;
-    const course = await Course.findOne({ title: courseTitle });
 
-    if (!course) {
-      console.log('Course not found:', courseTitle);
-      return res.status(404).json({ error: 'Course not found' });
-    }
-
-    if (!course.modules || !Array.isArray(course.modules)) {
-      console.log('Modules not found or not an array:', courseTitle);
-      return res.status(404).json({ error: 'Modules not found' });
-    }
-
-    const module = course.modules.find(
-      (module) => module.title === moduleTitle
-    );
-
-    if (!module) {
-      console.log('Module not found:', moduleTitle);
-      return res.status(404).json({ error: 'Module not found' });
-    }
-
-    res.json(module);
-  } catch (error) {
-    console.error('Error fetching module details:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 app.get('/', (req, res) => {
   res.send('Welcome to My API');
